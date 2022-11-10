@@ -6,7 +6,7 @@ import EquationResult from "./components/UI/EquationResult";
 import InputForm from "./components/UI/InputForm";
 
 function App() {
-  const [result, setResult] = useState("Wynik");
+  const [result, setResult] = useState("");
 
   const getValueFromField = (el) => {
     // console.log(el.target.value);
