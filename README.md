@@ -1,4 +1,4 @@
-Ćwiczenie dla sprawdzenia wiedzy na temat js i Reacta.
+Ćwiczenie dla sprawdzenia wiedzy na temat JS i Reacta.
 Kalkulator do przeliczania wartości na żywo z jednym inputem. Na górze ekranu będzie wyświetlany wynik na żywo.
 Wszelkie komentarze mile widziane.
 
