@@ -1,1 +1,3 @@
-Kalkulator live z jednym inputem i przysikami operacji matematycznych. Na górze ekranu będzie wyświetlany wynik na żywo.
+Ćwiczenie dla sprawdzenia wiedzy na temat js i Reacta.
+
+Kalkulator do przeliczania wartości na żywo z jednym inputem. Na górze ekranu będzie wyświetlany wynik na żywo.
