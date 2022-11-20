@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import logo from "./logo.svg";
 import "./App.css";
 
@@ -8,9 +8,11 @@ import Validate from "./calculate/Validate";
 
 function App() {
   const [result, setResult] = useState("");
+  useEffect(() => {
+    console.log(result);
+  }, [result]);
   const getValueFromField = (el) => {
-    // console.log(el.target.value);
-    setResult(el.target.value);
+    setResult(el);
   };
 
   return (
