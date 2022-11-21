@@ -2,17 +2,18 @@ import React, { useEffect, useState } from "react";
 // import logo from "./logo.svg";
 import "./App.css";
 
-import EquationResult from "./components/UI/EquationResult";
 import InputForm from "./components/UI/InputForm";
 import Validate from "./calculate/Validate";
 
 function App() {
-  const [result, setResult] = useState("");
+  const [resultString, setResultString] = useState("");
+
   useEffect(() => {
-    console.log(result);
-  }, [result]);
-  const getValueFromField = (el) => {
-    setResult(el);
+    console.log("app", resultString);
+  }, [resultString]);
+
+  const getValueFromField = (input) => {
+    setResultString(input);
   };
 
   return (
@@ -22,7 +23,7 @@ function App() {
           getValueFromField
         } /* przekazanie parametru którym posłużę się do wyciągnięcia wartości inputa */
       />
-      <Validate enteredString={result} />
+      <Validate enteredString={resultString} />
       {/* <div>Znak</div>
       <div>Znak</div>
       <div>Znak</div>

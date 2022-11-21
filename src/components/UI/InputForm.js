@@ -6,7 +6,8 @@ const Input = (props) => {
   const [input, setInput] = useState([]);
 
   useEffect(() => {
-    console.log("Równanie", input);
+    console.log(input);
+    props.valueHandler(input.join(""));
   }, [input]);
 
   const inputFieldValue = (inputValue) => {
@@ -19,16 +20,12 @@ const Input = (props) => {
         lastChar === "*" ||
         lastChar === "/"
       ) {
-        console.log("Operator", lastChar);
+        // console.log("Operator", lastChar);
         setInput((oldArray) => [...oldArray, lastChar]);
         return;
-      } else {
-        console.log("Litera", inputValue.target.value);
-        inputValue.target.value.slice(0, -1);
-        return;
-      }
-    } else setInput((oldArray) => [...oldArray, lastChar]);
-    props.valueHandler(input);
+      } else return;
+    } else if (lastChar == " ") return;
+    else setInput((oldArray) => [...oldArray, lastChar]);
   };
 
   return (
