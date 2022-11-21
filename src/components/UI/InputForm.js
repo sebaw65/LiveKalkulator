@@ -35,6 +35,9 @@ const Input = (props) => {
       placeholder="Wprowadź równanie"
       onChange={inputFieldValue}
       value={input.join("")}
+      onKeyDown={(e) => {
+        if (e.key === "Backspace") setInput(input.slice(0, -1));
+      }}
       /* tutaj wywołuję funkcję inputFieldValue w której przekażę na górę zawartość inputa*/
     />
   );
