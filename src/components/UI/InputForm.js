@@ -7,8 +7,9 @@ const Input = (props) => {
 
   useEffect(() => {
     console.log(input);
+    if (input === "") return;
     props.valueHandler(input.join(""));
-  }, [input]);
+  }, [input !== ""]);
 
   const inputFieldValue = (inputValue) => {
     const lastChar = inputValue.target.value.at(-1);
@@ -29,17 +30,21 @@ const Input = (props) => {
   };
 
   return (
-    <input
-      className={styles.input}
-      type="text"
-      placeholder="Wprowadź równanie"
-      onChange={inputFieldValue}
-      value={input.join("")}
-      onKeyDown={(e) => {
-        if (e.key === "Backspace") setInput(input.slice(0, -1));
-      }}
-      /* tutaj wywołuję funkcję inputFieldValue w której przekażę na górę zawartość inputa*/
-    />
+    <>
+      <input
+        className={styles.input}
+        type="text"
+        placeholder="Wprowadź równanie"
+        onChange={inputFieldValue}
+        value={input.join("")}
+        onKeyDown={(e) => {
+          if (e.key === "Backspace") setInput(input.slice(0, -1));
+        }}
+
+        /* tutaj wywołuję funkcję inputFieldValue w której przekażę na górę zawartość inputa*/
+      />
+      <button onClick={() => setInput([])}>Wyczyść</button>
+    </>
   );
 };
 
