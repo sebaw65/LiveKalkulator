@@ -8,8 +8,11 @@ const Validate = (props) => {
   }
 
   useEffect(() => {
-    if (!isNaN(props.enteredString.at(-1)))
-      setResult(equation(props.enteredString));
+    if (props.enteredString.length === 0) { setResult("0"); return; } //prettier-ignore
+    else if (!isNaN(props.enteredString.at(-1))) {
+      setResult(equation(props.enteredString.join("")));
+      return;
+    }
   }, [props.enteredString]);
 
   return (

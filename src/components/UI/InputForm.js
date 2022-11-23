@@ -4,12 +4,11 @@ import styles from "./InputForm.module.css";
 
 const Input = (props) => {
   const [input, setInput] = useState([]);
-
+  //w późniejszym czasie zrobię tu porządek i oddzielę część funkcjonalną od wizualnej
   useEffect(() => {
     console.log(input);
-    if (input === "") return;
-    props.valueHandler(input.join(""));
-  }, [input !== ""]);
+    props.valueHandler(input); //przekaz wartosc input do komponentu powyzej
+  }, [input]);
 
   const inputFieldValue = (inputValue) => {
     const lastChar = inputValue.target.value.at(-1);
@@ -21,12 +20,19 @@ const Input = (props) => {
         lastChar === "*" ||
         lastChar === "/"
       ) {
+        if (
+          input.at(-1) === "+" ||
+          input.at(-1) === "-" ||
+          input.at(-1) === "*" ||
+          input.at(-1) === "/"
+        )
+          return;
         // console.log("Operator", lastChar);
-        setInput((oldArray) => [...oldArray, lastChar]);
+        setInput((oldArray) => [...oldArray, lastChar]); //w przypadku gdy znak zostanie wpisany tylko raz
         return;
       } else return;
-    } else if (lastChar == " ") return;
-    else setInput((oldArray) => [...oldArray, lastChar]);
+    } else if (lastChar === " ") return;
+    else setInput((oldArray) => [...oldArray, lastChar]); //gdy zostanie wprowadzona cyfra
   };
 
   return (
@@ -40,10 +46,14 @@ const Input = (props) => {
         onKeyDown={(e) => {
           if (e.key === "Backspace") setInput(input.slice(0, -1));
         }}
-
-        /* tutaj wywołuję funkcję inputFieldValue w której przekażę na górę zawartość inputa*/
       />
-      <button onClick={() => setInput([])}>Wyczyść</button>
+      <button
+        onClick={() => {
+          setInput([]);
+        }}
+      >
+        Wyczyść
+      </button>
     </>
   );
 };
