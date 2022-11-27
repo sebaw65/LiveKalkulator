@@ -1,4 +1,3 @@
-import { type } from "@testing-library/user-event/dist/type";
 import React, { useEffect, useState } from "react";
 
 import styles from "./InputForm.module.css";
@@ -17,9 +16,16 @@ const Input = (props) => {
       regexePrevInput = /[+\-*/]/;
 
     if (regexLastInput.test(lastChar)) {
-      if (regexePrevInput.test(lastChar)) if (input.at(-1) === lastChar) return;
+      if (regexePrevInput.test(lastChar))
+        if (lastChar === input.at(-1)) {
+          const newState = input.map((input, index) => {
+            console.log("dl. inpt", input.length);
+            console.log("arr", input, index);
+            return;
+          });
+        }
+      setInput((oldArray) => [...oldArray, lastChar]);
     }
-    setInput((oldArray) => [...oldArray, lastChar]);
   };
 
   return (
