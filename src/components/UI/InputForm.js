@@ -7,13 +7,20 @@ const Input = (props) => {
   //w późniejszym czasie zrobię tu porządek i oddzielę część funkcjonalną od wizualnej
 
   useEffect(() => {
-    if (/[+\-*/\(\)]/.test(input.at(1))) return;
+    const lastChar = input.at(-1);
+    //błąd spowodowany wykryciem sąsiadujących znaków
+    if (/[+\-*\/\(\)]/.test(lastChar)) return;
+    //błąd spowodowany wprowadzeniem innych znaków niż dopuszczalne
+    if (/[^0-9+\-*\/\(\)]+/g.test(input)) {
+      console.log("error");
+      return;
+    }
     props.valueHandler(input); //przekaz wartosc input do komponentu powyzej
   }, [input]);
 
   const inputFieldValue = (inputValue) => {
-    const regexLastInput = /[0-9+\-*/\(\)]/,
-      regexePrevInput = /[+\-*/\(\)]/,
+    const regexLastInput = /[0-9+\-*\/\(\)]/,
+      regexePrevInput = /[+\-*/]/,
       lastInput = inputValue.target.value.at(-1),
       preLastInput = inputValue.target.value.at(-2);
 
