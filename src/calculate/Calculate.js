@@ -10,7 +10,7 @@ const Calculate = (props) => {
   useEffect(() => {
     if (props.enteredString.length === 0) { setResult("0"); return; } //prettier-ignore
     else if (!isNaN(props.enteredString.at(-1))) {
-      setResult(equation(props.enteredString.join("")));
+      setResult(equation(props.enteredString));
       return;
     }
   }, [props.enteredString]);
