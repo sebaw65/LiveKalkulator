@@ -7,12 +7,13 @@ const Input = (props) => {
   //w późniejszym czasie zrobię tu porządek i oddzielę część funkcjonalną od wizualnej
 
   useEffect(() => {
+    if (/[+\-*/\(\)]/.test(input.at(1))) return;
     props.valueHandler(input); //przekaz wartosc input do komponentu powyzej
   }, [input]);
 
   const inputFieldValue = (inputValue) => {
-    const regexLastInput = /[0-9+\-*/]/,
-      regexePrevInput = /[+\-*/]/,
+    const regexLastInput = /[0-9+\-*/\(\)]/,
+      regexePrevInput = /[+\-*/\(\)]/,
       lastInput = inputValue.target.value.at(-1),
       preLastInput = inputValue.target.value.at(-2);
 
@@ -24,8 +25,7 @@ const Input = (props) => {
           preLastInput === "*" ||
           preLastInput === "/"
         ) {
-          const newValue = inputValue.target.value.slice(0, -2) + lastInput;
-          setInput(newValue);
+          setInput(inputValue.target.value.slice(0, -2) + lastInput);
           return;
         }
       console.log(input);
@@ -41,9 +41,6 @@ const Input = (props) => {
         placeholder="Wprowadź równanie"
         onChange={inputFieldValue}
         value={input}
-        onKeyDown={(e) => {
-          if (e.key === "Backspace") setInput(input.slice(0, -1)); //do poprawienia
-        }}
       />
       <button
         onClick={() => {
