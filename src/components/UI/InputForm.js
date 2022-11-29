@@ -8,21 +8,30 @@ const Input = (props) => {
 
   useEffect(() => {
     const lastChar = input.at(-1);
+
     //błąd spowodowany wykryciem sąsiadujących znaków
-    if (/[+\-*\/\(\)]/.test(lastChar)) return;
+    if (/[+\-*/)]/.test(lastChar)) return;
     //błąd spowodowany wprowadzeniem innych znaków niż dopuszczalne
-    if (/[^0-9+\-*\/\(\)]+/g.test(input)) {
+    if (/[^0-9+\-*/()]+/g.test(input)) {
       console.log("error");
       return;
     }
+
     props.valueHandler(input); //przekaz wartosc input do komponentu powyzej
   }, [input]);
 
   const inputFieldValue = (inputValue) => {
-    const regexLastInput = /[0-9+\-*\/\(\)]/,
+    const regexLastInput = /[0-9+\-*/()]/,
       regexePrevInput = /[+\-*/]/,
       lastInput = inputValue.target.value.at(-1),
-      preLastInput = inputValue.target.value.at(-2);
+      preLastInput = inputValue.target.value.at(-2),
+      openBracketCount = (inputValue.target.value.match(/[(]/g) || []).length,
+      closedBracketCount = (inputValue.target.value.match(/[)]/g) || []).length;
+
+    if (openBracketCount > closedBracketCount && lastInput !== "(")
+      return setInput(inputValue.target.value + ")");
+    if (openBracketCount < closedBracketCount)
+      return setInput(inputValue.target.value.slice(0, -1));
 
     if (regexLastInput.test(lastInput)) {
       if (regexePrevInput.test(lastInput))
