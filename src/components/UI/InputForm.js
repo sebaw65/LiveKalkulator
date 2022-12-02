@@ -4,44 +4,44 @@ import styles from "./InputForm.module.css";
 
 const Input = (props) => {
   const [input, setInput] = useState("");
-  const [isBracketClosed, setIsBracktClosed] = useState(true);
-  //w późniejszym czasie zrobię tu porządek i oddzielę część funkcjonalną od wizualnej
+  const [isBracketClosed, setIsBracketClosed] = useState(true);
 
   useEffect(() => {
     const lastChar = input.at(-1);
     //błąd spowodowany wykryciem sąsiadujących znaków
-    if (/[+\-*/)]/.test(lastChar)) return;
-
+    if (/[+\-*/]/.test(lastChar)) return;
     //błąd spowodowany wprowadzeniem innych znaków niż dopuszczalne
     if (/[^0-9+\-*/()]+/g.test(input)) {
       alert("Wykryto niepoprawny znak lub znaki");
       return;
     }
+    // console.log(!isBracketClosed);
     //sprawdza czy nawias został zamknięty
     if (!isBracketClosed) {
       console.log("Zamknij nawias");
       return;
     }
-
+    // console.log(lastChar);
     props.valueHandler(input); //przekaz wartosc input do komponentu powyzej
   }, [input]);
 
   const inputFieldValue = (inputValue) => {
-    const regexLastInput = /[0-9+\-*/()]/,
-      regexePrevInput = /[+\-*/]/,
-      lastInput = inputValue.target.value.at(-1),
+    const lastInput = inputValue.target.value.at(-1),
       preLastInput = inputValue.target.value.at(-2),
-      openBracketCount = (inputValue.target.value.match(/[(]/g) || []).length,
-      closedBracketCount = (inputValue.target.value.match(/[)]/g) || []).length;
+      openBracketCount = (inputValue.target.value.match(/[(]/g) || []).length, //sprawdza ile jest nawiasów otwartych
+      closedBracketCount = (inputValue.target.value.match(/[)]/g) || []).length; //sprawdza ile jest nawiasów zamkniętych
 
-    console.log(inputValue.target.value.length);
-    if (openBracketCount > closedBracketCount && lastInput !== "(")
-      setIsBracktClosed(false);
-    if (openBracketCount === closedBracketCount) setIsBracktClosed(true);
-    if (openBracketCount < closedBracketCount) setIsBracktClosed(false);
+    // console.log(inputValue.target.value.length);
+    if (openBracketCount !== closedBracketCount && lastInput !== "(")
+      setIsBracketClosed(false);
+    if (openBracketCount === closedBracketCount) {
+      setIsBracketClosed(true);
+    }
 
-    if (regexLastInput.test(lastInput)) {
-      if (regexePrevInput.test(lastInput))
+    //zawiera cyfry od 0-9 i znaki +-*/()
+    if (/[0-9+\-*/()]/.test(lastInput)) {
+      //zawiera znaki znaki +-*/
+      if (/[+\-*/]/.test(lastInput))
         if (
           preLastInput === "+" ||
           preLastInput === "-" ||
@@ -51,7 +51,7 @@ const Input = (props) => {
           setInput(inputValue.target.value.slice(0, -2) + lastInput);
           return;
         }
-      console.log(inputValue.target.value);
+      // console.log(inputValue.target.value);
       setInput(inputValue.target.value);
     }
   };

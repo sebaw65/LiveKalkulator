@@ -11,7 +11,7 @@ const Calculate = (props) => {
     //obsługa nieprzewidzianych błędów
     try {
       if (props.enteredString.length === 0) { setResult("0"); return; } //prettier-ignore
-      else if (!isNaN(props.enteredString.at(-1))) {
+      else if (/[0-9+\-*/()]/.test(props.enteredString.at(-1))) {
         setResult(equation(props.enteredString));
         return;
       }

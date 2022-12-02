@@ -8,9 +8,9 @@ import Calculate from "./calculate/Calculate";
 function App() {
   const [resultString, setResultString] = useState("");
 
-  useEffect(() => {
-    console.log("app", resultString);
-  }, [resultString]);
+  // useEffect(() => {
+  //   console.log("app", resultString);
+  // }, [resultString]);
 
   const getValueFromField = (input) => {
     setResultString(input);
