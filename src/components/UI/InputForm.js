@@ -29,7 +29,9 @@ const Input = (props) => {
     const lastInput = inputValue.target.value.at(-1),
       preLastInput = inputValue.target.value.at(-2),
       openBracketCount = (inputValue.target.value.match(/[(]/g) || []).length, //sprawdza ile jest nawiasów otwartych
-      closedBracketCount = (inputValue.target.value.match(/[)]/g) || []).length; //sprawdza ile jest nawiasów zamkniętych
+      closedBracketCount = (inputValue.target.value.match(/[)]/g) || []).length, //sprawdza ile jest nawiasów zamkniętych
+      acceptedInputRegex = /[0-9+\-*/()]/, //zawiera cyfry od 0-9 i znaki +-*/()
+      symbolRegex = /[+\-*/]/; //zawiera znaki znaki +-*/
 
     // console.log(inputValue.target.value.length);
     if (openBracketCount !== closedBracketCount && lastInput !== "(")
@@ -38,20 +40,25 @@ const Input = (props) => {
       setIsBracketClosed(true);
     }
 
-    //zawiera cyfry od 0-9 i znaki +-*/()
-    if (/[0-9+\-*/()]/.test(lastInput)) {
-      //zawiera znaki znaki +-*/
-      if (/[+\-*/]/.test(lastInput))
-        if (
-          preLastInput === "+" ||
-          preLastInput === "-" ||
-          preLastInput === "*" ||
-          preLastInput === "/"
-        ) {
-          setInput(inputValue.target.value.slice(0, -2) + lastInput);
+    if (acceptedInputRegex.test(lastInput)) {
+      //sprawdza czy ostatni i przedostatni znak to symbol. Jeśli tak, to nadpisuje ostatni znak
+      if (symbolRegex.test(lastInput))
+        if (symbolRegex.test(preLastInput)) {
+          return setInput(inputValue.target.value.slice(0, -2) + lastInput);
+        }
+      if (lastInput === "(")
+        if (/[0-9]/.test(preLastInput)) {
+          return setInput(input + "*" + lastInput);
+        }
+      if (/[0-9]/.test(lastInput))
+        if (preLastInput === ")") {
+          return setInput(input + "*" + lastInput);
+        }
+      if (lastInput === "0")
+        if (preLastInput === "/") {
+          alert("Nie wolno dzielić przez 0");
           return;
         }
-      // console.log(inputValue.target.value);
       setInput(inputValue.target.value);
     }
   };
