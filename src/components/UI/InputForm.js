@@ -4,16 +4,22 @@ import styles from "./InputForm.module.css";
 
 const Input = (props) => {
   const [input, setInput] = useState("");
+  const [isBracketClosed, setIsBracktClosed] = useState(true);
   //w późniejszym czasie zrobię tu porządek i oddzielę część funkcjonalną od wizualnej
 
   useEffect(() => {
     const lastChar = input.at(-1);
-
     //błąd spowodowany wykryciem sąsiadujących znaków
     if (/[+\-*/)]/.test(lastChar)) return;
+
     //błąd spowodowany wprowadzeniem innych znaków niż dopuszczalne
     if (/[^0-9+\-*/()]+/g.test(input)) {
-      console.log("error");
+      alert("Wykryto niepoprawny znak lub znaki");
+      return;
+    }
+    //sprawdza czy nawias został zamknięty
+    if (!isBracketClosed) {
+      console.log("Zamknij nawias");
       return;
     }
 
@@ -28,10 +34,11 @@ const Input = (props) => {
       openBracketCount = (inputValue.target.value.match(/[(]/g) || []).length,
       closedBracketCount = (inputValue.target.value.match(/[)]/g) || []).length;
 
+    console.log(inputValue.target.value.length);
     if (openBracketCount > closedBracketCount && lastInput !== "(")
-      return setInput(inputValue.target.value + ")");
-    if (openBracketCount < closedBracketCount)
-      return setInput(inputValue.target.value.slice(0, -1));
+      setIsBracktClosed(false);
+    if (openBracketCount === closedBracketCount) setIsBracktClosed(true);
+    if (openBracketCount < closedBracketCount) setIsBracktClosed(false);
 
     if (regexLastInput.test(lastInput)) {
       if (regexePrevInput.test(lastInput))
@@ -44,7 +51,7 @@ const Input = (props) => {
           setInput(inputValue.target.value.slice(0, -2) + lastInput);
           return;
         }
-      console.log(input);
+      console.log(inputValue.target.value);
       setInput(inputValue.target.value);
     }
   };
