@@ -54,6 +54,10 @@ const Input = (props) => {
         if (preLastInput === ")") {
           return setInput(input + "*" + lastInput);
         }
+      if (lastInput === "(")
+        if (preLastInput === ")") {
+          return setInput(input + "*" + lastInput);
+        }
       if (lastInput === "0")
         if (preLastInput === "/") {
           alert("Nie wolno dzielić przez 0");
